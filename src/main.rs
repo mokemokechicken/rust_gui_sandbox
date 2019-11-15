@@ -62,9 +62,9 @@ fn main() {
                 }
                 _ => (),
             };
-
-            set_ui(ui.set_widgets(), &ids);
         }
+
+        set_ui(ui.set_widgets(), &ids);
 
         if let Some(primitives) = ui.draw_if_changed() {
             renderer.fill(&display, primitives, &image_map);
