@@ -9,4 +9,4 @@ edition = "2018"
 [dependencies]
 conrod_core = "0.68.0"
 conrod_glium = "0.68.0"
-glium = "0.25.0"
+glium = "0.24.0"
