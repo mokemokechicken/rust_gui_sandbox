@@ -8,19 +8,16 @@ mod event;
 mod constants;
 mod animation;
 
-const WIDTH: u32 = 400;
-const HEIGHT: u32 = 400;
-
 fn main() {
     let mut events_loop = glium::glutin::EventsLoop::new();
     let window = glium::glutin::WindowBuilder::new()
         .with_title("Circle Widget Demo")
-        .with_dimensions((WIDTH, HEIGHT).into());
+        .with_dimensions((constants::WIDTH, constants::HEIGHT).into());
     let context = glium::glutin::ContextBuilder::new()
         .with_vsync(true)
         .with_multisampling(4);
     let display = glium::Display::new(window, context, &events_loop).unwrap();
-    let mut ui = conrod_core::UiBuilder::new([WIDTH as f64, HEIGHT as f64]).build();
+    let mut ui = conrod_core::UiBuilder::new([constants::WIDTH as f64, constants::HEIGHT as f64]).build();
 
     // A type used for converting `conrod_core::render::Primitives` into `Command`s that can be used
     // for drawing to the glium `Surface`.
@@ -52,7 +49,7 @@ fn main() {
             };
         }
 
-        anim.set_ui(ui.set_widgets());
+        anim.next_frame(ui.set_widgets());
 
         if let Some(primitives) = ui.draw_if_changed() {
             renderer.fill(&display, primitives, &image_map);

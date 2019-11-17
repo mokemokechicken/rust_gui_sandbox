@@ -1,5 +1,5 @@
 use conrod_core;
-use conrod_core::{widget, Positionable, Colorable, Widget, Point};
+use conrod_core::{widget, Positionable, Colorable, Widget};
 
 widget_ids! {
     struct Ids {
@@ -20,7 +20,7 @@ impl Animation {
         }
     }
 
-    pub fn set_ui(&mut self, ref mut ui: conrod_core::UiCell) {
+    pub fn next_frame(&mut self, ref mut ui: conrod_core::UiCell) {
         self.n_frame += 1;
 
         widget::Circle::fill(10.)

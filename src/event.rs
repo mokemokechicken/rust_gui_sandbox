@@ -1,14 +1,7 @@
 use std;
 use glium;
 
-/// In most of the examples the `glutin` crate is used for providing the window context and
-/// events while the `glium` crate is used for displaying `conrod_core::render::Primitives` to the
-/// screen.
-///
-/// This `Iterator`-like type simplifies some of the boilerplate involved in setting up a
-/// glutin+glium event loop that works efficiently with conrod.
 pub struct AnimationLoop {
-    ui_needs_update: bool,
     last_update: std::time::Instant,
 }
 
@@ -16,7 +9,6 @@ impl AnimationLoop {
     pub fn new() -> Self {
         AnimationLoop {
             last_update: std::time::Instant::now(),
-            ui_needs_update: true,
         }
     }
 
@@ -33,30 +25,7 @@ impl AnimationLoop {
         let mut events = Vec::new();
         events_loop.poll_events(|event| events.push(event));
 
-//        // If there are no events and the `Ui` does not need updating, wait for the next event.
-//        if events.is_empty() && !self.ui_needs_update {
-//            events_loop.run_forever(|event| {
-//                events.push(event);
-//                glium::glutin::ControlFlow::Break
-//            });
-//        }
-
-        self.ui_needs_update = false;
         self.last_update = std::time::Instant::now();
-
         events
     }
-
-    /// Notifies the event loop that the `Ui` requires another update whether or not there are any
-    /// pending events.
-    ///
-    /// This is primarily used on the occasion that some part of the `Ui` is still animating and
-    /// requires further updates to do so.
-    pub fn needs_update(&mut self) {
-        self.ui_needs_update = true;
-    }
 }
-
-// Conversion functions for converting between types from glium's version of `winit` and
-// `conrod_core`.
-// conrod_winit::conversion_fns!();
